@@ -52,4 +52,7 @@ Frontend dev server defaults to Vite’s port (e.g., 5173).
 ## Scripts
 - Backend: `npm run dev` (nodemon), `npm start`.
 - Frontend: `npm run dev`, `npm run build`, `npm run preview`.
+<<<<<<< HEAD
 
+=======
+>>>>>>> b181d33152306e1df6422821dda0af6c7378e2fa
