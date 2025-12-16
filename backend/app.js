@@ -1,5 +1,5 @@
 const express = require("express");
-const serverless = require("serverless-http"); // <-- Add this
+const serverless = require("serverless-http"); 
 require("dotenv").config();
 const path = require("path");
 const sendEmail = require("./sendEmail");
@@ -36,8 +36,13 @@ app.post("/verifyOtp", (req, res) => {
   res.send("Email verified successfully");
 });
 
-// ❌ Remove this line for Vercel
-// app.listen(8080, () => console.log("Server running"));
-
-// ✅ Export handler for Vercel
+// ✅ Export for Vercel serverless
 module.exports.handler = serverless(app);
+
+// ✅ Optional: run locally if not on Vercel
+if (!process.env.VERCEL) {
+  const port = process.env.PORT || 8080;
+  app.listen(port, () => {
+    console.log("Server running on port " + port);
+  });
+}
