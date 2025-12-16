@@ -1,12 +1,10 @@
 const express = require("express");
-
-const app = express();
-
+const serverless = require("serverless-http"); // <-- Add this
 require("dotenv").config();
-
 const path = require("path");
 const sendEmail = require("./sendEmail");
 
+const app = express();
 const verifyOtp = [];
 
 app.set("view engine", "ejs");
@@ -33,17 +31,13 @@ app.post("/sendEmail", async (req, res) => {
 
 app.post("/verifyOtp", (req, res) => {
   const otp = req.body.otp;
-  if (!otp) {
-    return res.send("Please provide OTP");
-  }
-  if (otp != verifyOtp[verifyOtp.length - 1]) {
-    return res.send("Invalid OTP");
-  }
+  if (!otp) return res.send("Please provide OTP");
+  if (otp != verifyOtp[verifyOtp.length - 1]) return res.send("Invalid OTP");
   res.send("Email verified successfully");
 });
 
-app.listen(8080, () => {
-  console.log("Server is running on port 8080");
-});
+// ❌ Remove this line for Vercel
+// app.listen(8080, () => console.log("Server running"));
 
+// ✅ Export handler for Vercel
 module.exports.handler = serverless(app);
